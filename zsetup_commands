@@ -1,0 +1,108 @@
+open postgresql
+$ rails new stack_overflow_clone -d postgresql –T
+
+confirm:
+	config/application.rb does not contain: config.action_controller.permit_all_parameters = true 
+
+	app/controllers/application_controller.rb: includes protect_from_forgery with: :exception [protect against csrf]
+
+*config/database.yml:
+
+development:   
+  adapter: postgresql   
+  database: stack_overflow_clone_development    
+
+test:
+  adapter: postgresql   
+  database: stack_overflow_clone_test
+
+open postgres
+
+$ rake db:create
+
+update gemfile
+
+$ bundle install
+
+$ rails generate rspec:install
+
+*Bootstrap
+stylesheets/application.css: change to css.scss (for sass).  Add:
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+[@import "@import styling.scss";[or any other scss files for styling]";]
+
+javascripts/application.js: Add:
+//= require bootstrap-sprockets
+
+*users:
+
+--applications controller:
+  def current_user
+    @current_user ||= User.find(session[:user_id]) if session[:user_id]
+  end
+  helper_method :current_user
+
+  def authorize
+    redirect_to login_path, alert: "Not authorized" if current_user.nil? #relates to before filters. If user not logged in (ie, current_user = nil), then send error message if takes action not authorized to take
+  end
+
+--application.html.erb:
+<div class="container">
+     <div id="user_header">
+        <% if current_user %>
+          Logged in as <%= current_user.email %>.
+          <%= link_to "Log Out", logout_path %>
+        <% else %>
+          <%= link_to "Sign Up", signup_path %> or
+          <%= link_to "Log In", login_path %>
+        <% end %>
+      </div>
+
+
+
+    <% if flash[:notice] %>
+      <div class="alert alert-info">
+        <%= flash[:notice] %>
+      </div>
+    <% end %>
+    <% if flash[:alert] %>
+      <div class="alert alert-danger">
+        <%= flash[:alert] %>
+      </div>
+    <% end %>
+
+    <%= yield %>
+
+ </div>
+</body>
+
+
+
+*Flash Messages:
+views/layouts/application.html.erb:
+    <% if flash[:notice] %>
+      <div class="alert alert-info">
+        <%= flash[:notice] %>
+      </div>
+    <% end %>
+    <% if flash[:alert] %>
+      <div class="alert alert-danger">
+        <%= flash[:alert] %>
+      </div>
+    <% end %>
+
+*Migration
+
+$ rails generate migration create_users  
+$ rails generate migration create_questions
+$ rails generate migration create_answers    
+
+[Note: also create sessions contoller for logins--no migration or model required there]
+
+[examples of rollback, remove, and add:	
+	$ rake db:rollback VERSION=20150121004709 (delete file first; also can use STEP = 2)
+	$ rails generate migration RemoveRecipie_IdFromRecipesTags recipie_id:integer
+	$ rails generate migration AddImageToPhotos image:attachment
+	$ rails generate migration AddImageToPhotos image:attachment
