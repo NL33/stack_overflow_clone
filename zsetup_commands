@@ -30,8 +30,7 @@ $ rails generate rspec:install
 stylesheets/application.css: change to css.scss (for sass).  Add:
 @import "bootstrap-sprockets";
 @import "bootstrap";
-
-[@import "@import styling.scss";[or any other scss files for styling]";]
+@import "styling.scss"; [or other preferred file]
 
 javascripts/application.js: Add:
 //= require bootstrap-sprockets

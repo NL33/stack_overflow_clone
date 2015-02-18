@@ -1,0 +1,26 @@
+<%= content_for(:title, "Question | StackFlow") %>
+
+<h1><%= link_to "StackFlow", root_path %></h1>
+
+<h5> Here is another excellent question: </h5>
+
+</br></br>
+<h4><%= @question.title %></h4>
+
+<hr>
+
+<p><%= @question.text %></p></br>
+
+<p><div class="minibox"><div class="ellipsis"><%= @user.name %></div></div></p>
+
+<hr><%= link_to "Add Answer", new_question_answer_path(@question, @answer)%>
+
+</br>
+<hr>
+
+<% if @question.answers %>
+  <% @question.answers.each do |answer| %>
+    <p><div class="minibox"><div class="ellipsis"><%= answer.show_user %></div></div><%= answer.text %></p>
+   <% end %>
+<% end %>
+

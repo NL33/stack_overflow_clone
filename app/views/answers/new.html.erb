@@ -1,0 +1,13 @@
+<h3> Write your answer here: </h3>
+
+<%= form_for(@question, @answer) do |f| %>
+  
+   <div class="form-group">
+    <%= f.label :text %></br>
+    <%= f.text_area :text, :size => "70x10" %>
+  </div>
+
+  <%= f.hidden_field :user_id, :value => @user.id %>
+  
+  <%= f.submit(:class => "btn btn-primary") %>
+<% end %>

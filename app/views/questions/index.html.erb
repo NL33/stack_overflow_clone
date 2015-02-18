@@ -1,0 +1,25 @@
+<%= content_for(:title, "StackFlow | Home") %>
+
+<h2> StackFlow! </h2>
+
+<% @questions.each do |question| %>
+<table>
+  <tr>
+	 <td><div class ="center"><%= question.answers.count %></br> answers </div></td>
+	 <td> <%= link_to question.title, question_path(question) %></td>
+  </tr>
+</table>
+  <% end %>
+</br>
+
+<% unless @user %>
+   <%= link_to "Sign Up", new_user_path, :class => "btn btn-default" %>
+
+   <%= link_to "Log In", new_session_path, :class => "btn btn-default" %>
+<% end %>
+
+<% if @user %>
+  <%= link_to "Add a Question", new_question_path, :class => "btn btn-default" %>
+<% end %>
+  
+

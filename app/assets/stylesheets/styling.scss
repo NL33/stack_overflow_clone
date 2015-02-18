@@ -1,0 +1,30 @@
+.minibox {
+    background-color: #deedff;
+    width: 130px;
+    padding: 10px;
+    border: none;
+    margin: 10px;
+    float: right;
+    text-align: center;
+}
+
+table {
+    width: 50%;
+}
+
+table, td, th {
+    border: 1px solid black;
+}
+
+
+.center {
+    text-align: center;
+}
+
+.ellipsis { /* this is used for the box class */
+  text-overflow: ellipsis;
+
+  /* Required for text-overflow to do anything */
+  white-space: nowrap;
+  overflow: hidden;
+}

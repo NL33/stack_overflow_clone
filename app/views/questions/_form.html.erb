@@ -1,0 +1,16 @@
+
+<%= form_for(@question) do |f| %>
+  <div class="form-group">
+    <%= f.label :title %></br> 
+    <%= f.text_field :title %>
+  </div>
+  
+   <div class="form-group">
+    <%= f.label :text %></br>
+    <%= f.text_area :text, :size => "70x10" %>
+  </div>
+
+  <%= f.hidden_field :user_id, :value => @user.id %>
+  
+  <%= f.submit(:class => "btn btn-primary") %>
+<% end %>
