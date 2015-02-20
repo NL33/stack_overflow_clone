@@ -31,7 +31,7 @@ class QuestionsController < ApplicationController
     @question = Question.find(params[:id]) 
     user_id = @question.user_id
     @user = User.where({:id => user_id }).first 
-    @answer = Answer.new
+    #@answer = Answer.new
   end
 
   def edit  
@@ -46,6 +46,9 @@ class QuestionsController < ApplicationController
 
   def update 
     @question = Question.find(params[:id])
+    @answers = question.answers
+    
+
     @question.update(question_params)
      flash[:notice] = "Question Updated"
     redirect_to root_path

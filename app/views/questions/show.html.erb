@@ -13,14 +13,26 @@
 
 <p><div class="minibox"><div class="ellipsis"><%= @user.name %></div></div></p>
 
-<hr><%= link_to "Add Answer", new_question_answer_path(@question, @answer)%>
+<hr>
+<h4><div class="answer_alert"></div></h4>
+
+<%= link_to "Add Answer", new_question_answer_path(@question), id: "new_answer", remote: true %>
 
 </br>
 <hr>
 
+
 <% if @question.answers %>
-  <% @question.answers.each do |answer| %>
-    <p><div class="minibox"><div class="ellipsis"><%= answer.show_user %></div></div><%= answer.text %></p>
-   <% end %>
+	<div class="show_answers">
+	 <%= render @question.answers %>
+	 <%# Whenever render is passed a collection of objects, it will render a partial with the same name as the class of the objects in the collection. So this is equivalent to
+	    <% @question.answers.each do |answer | %>
+	       <%#= render 'answer' %>
+	    <%# end %> 
+	</div> 
 <% end %>
+
+
+
+
 

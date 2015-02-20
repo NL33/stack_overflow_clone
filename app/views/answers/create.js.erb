@@ -1,0 +1,5 @@
+$('.new_question_answer').remove(); //remove form with this id once submitted
+$('#new_answer').show(); //show the add answer prompt with this id
+$('.answer_alert').text("Thanks. Your answer has been entered below.")//fills div class with this message, like a flash message.
+$('.show_answers').append('<%= j render(@answer) %>'); //adds @answer (per the controller, the answer just entered) to the loop listed in the form, rendered in the show_answers class
+

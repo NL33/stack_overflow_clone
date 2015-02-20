@@ -8,7 +8,11 @@ class AnswersController < ApplicationController
 
   def new 
     @answer = current_user.answers.build  #this method (and the answers.build in create) makes it so that whenever a user creates a answer, it is automatically added to their profile (even if hit "add answer" while viewing another's profile)
-    @user = current_user #another method would be to set this to current_user
+    @question = Question.find(params[:question_id])
+    question_creator_id = @question.user_id
+    @current_user = current_user
+    @question_creator = User.where({:id => question_creator_id}).first
+    #another method would be to set this to current_user
     #as opposed to answers.build method, if wanted to make it so could only create answer from within your profile (eg, if viewing the show page of another user, could not create a answer yourself from that page), could use this that raises an error:
       #if @user != current_user  
       # flash[:notice] = "you are not authorized to do post a answer for that account."
@@ -20,8 +24,11 @@ class AnswersController < ApplicationController
     @answer = current_user.answers.build(answer_params)
     @user = current_user
      if @answer.save
-        flash[:notice] = "answer added."
-        redirect_to root_path 
+        #flash[:notice] = "answer added."
+        respond_to do |format|
+          format.html { redirect_to root_path}
+          format.js #refers to separate template--here, with create action in name (create.js.erb)
+         end
       else
         render 'new' 
       end
@@ -35,20 +42,19 @@ class AnswersController < ApplicationController
   end
 
   def edit  
-    if User.find(params[:user_id]) != current_user
-      flash[:notice] = "You are not permitted to edit this answer"
-      redirect_to root_path
-    else
-      @user = current_user
-      @answer = Answer.find(params[:id])
-    end
   end
 
-  def update 
+  def update  
+    @question = Question.find(params[:question_id])
+    question_creator_id = @question.user_id
+    @current_user = current_user
+    @question_creator = User.where({:id => question_creator_id}).first
     @answer = Answer.find(params[:id])
     @answer.update(answer_params)
-     flash[:notice] = "Answer Updated"
-    redirect_to root_path
+    respond_to do |format|
+      format.html { redirect_to root_parth }
+      format.js
+    end
   end
 
  def destroy 
@@ -61,7 +67,7 @@ class AnswersController < ApplicationController
  private
 
     def answer_params
-      params.require(:answer).permit(:text)
+      params.require(:answer).permit(:text, :question_id, :chosen_answer)
     end
 
 end

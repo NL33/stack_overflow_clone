@@ -1,0 +1,12 @@
+<div class ="new_question_answer">
+	<%= form_for [@question, @answer], remote: true do |f| %> <%# note: if @question were not defined in answers controller, could just pass symbol here: form_for [:question, @answer] would also work. %> 
+	   <div class="form-group">
+	    <%= f.label "Your answer text:" %></br>
+	    <%= f.text_area :text, :size => "70x10" %>
+	  </div>
+
+	  <%= f.hidden_field :question_id, :value => @question.id %>
+	  
+	  <%= f.submit(:class => "btn btn-primary") %>
+  <% end %>
+</div>

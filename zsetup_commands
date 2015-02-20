@@ -96,7 +96,11 @@ views/layouts/application.html.erb:
 
 $ rails generate migration create_users  
 $ rails generate migration create_questions
-$ rails generate migration create_answers    
+$ rails generate migration create_answers
+   $ rails generate migration DeleteChosenAnswerFromAnswers chosen_answer:string
+    $ rails generate migration AddChosenAnswerToAnswers chosen_answer:boolean
+
+
 
 [Note: also create sessions contoller for logins--no migration or model required there]
 
