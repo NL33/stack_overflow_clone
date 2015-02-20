@@ -1,18 +1,17 @@
-
-    <h4>  &nbsp;&nbsp;&nbsp;&nbsp;Answer </h4>
+<h4>  &nbsp;&nbsp;&nbsp;&nbsp;Answer </h4>
     <p><div class="minibox"><div class="ellipsis"><%= answer.show_user %></div></div> &nbsp;&nbsp;&nbsp;&nbsp;<%= answer.text %></p></br>
     <% if @current_user == @question_creator %>
-       <div id ="<%= answer.id %>">
+       
        	 <% if answer.chosen_answer == true %>
-       	      <p> You have chosen this as the selected answer </p>
-       	 <% else %>
+       	      <span id ="answer_that_used_to_be_chosen"><p><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> This has been chosen as the selected answer </p></span>
+       	 <% else %><div id ="<%= answer.id %>">
     	     <%= form_for [@question, answer], remote: true do |f| %> 
       
                 <%= f.hidden_field :chosen_answer, :value => true %> 
 	            <%= f.submit "select as the best" %>
-	         <% end %>
+	         <% end %></div>
         <% end %>
-      <div>
+      
     <% end %>
     <hr>
   

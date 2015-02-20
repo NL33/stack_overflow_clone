@@ -51,6 +51,10 @@ class AnswersController < ApplicationController
     @question_creator = User.where({:id => question_creator_id}).first
     @answer = Answer.find(params[:id])
     @answer.update(answer_params)
+    @other_answers = @answer.find_other_answers
+    @other_answers.each do |other_answer| 
+       other_answer.update({:chosen_answer => false}) #updates all other answers to not be chosen answer when @answer is chosen
+    end
     respond_to do |format|
       format.html { redirect_to root_parth }
       format.js
