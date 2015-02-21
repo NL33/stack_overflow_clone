@@ -1,0 +1,13 @@
+
+  <%= form_for (:upvote), remote: true do |f| %> 
+        
+      <%= f.hidden_field :user_id, :value => current_user.id %> 
+      <%= f.hidden_field :answer_id, :value => answer.id %>   
+
+      <%= f.submit "↑" %> 
+  <% end %>
+</div>
+
+<%= link_to "↑", new_upvote_path(@upvote, "@upvote[user_id]" => (@current_user.id), "@upvote[answer_id]" => (answer.id)), :method => :post %>
+
+<%= link_to "↑", upvotes_path(@upvote, @upvote[user_id] => current_user.id, @upvote[answer_id] => answer.id), :method => :post %>

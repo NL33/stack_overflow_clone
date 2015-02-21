@@ -1,5 +1,17 @@
-<h4>  &nbsp;&nbsp;&nbsp;&nbsp;Answer </h4>
-    <p><div class="minibox"><div class="ellipsis"><%= answer.show_user %></div></div> &nbsp;&nbsp;&nbsp;&nbsp;<%= answer.text %></p></br>
+  
+
+  <%= form_for (@upvote), remote: true do |f| %> 
+
+      <%= f.hidden_field :user_id, :value => current_user.id %> 
+      <%= f.hidden_field :answer_id, :value => answer.id %>   
+
+     <p> <%= f.submit "↑" %>
+      &nbsp;<span class="<%= answer.id %>"><%= answer.upvotes.count %></span> Votes </p> 
+  <% end %>
+
+  
+    <p><div class="minibox"><div class="ellipsis"><%= answer.show_user %></div></div>&nbsp;&nbsp;&nbsp;&nbsp;<%= answer.text %></br></p>
+
     <% if @current_user == @question_creator %>
        
        	 <% if answer.chosen_answer == true %>
@@ -8,7 +20,7 @@
     	     <%= form_for [@question, answer], remote: true do |f| %> 
       
                 <%= f.hidden_field :chosen_answer, :value => true %> 
-	            <%= f.submit "select as the best" %>
+	            <h5><%= f.submit "select as the best" %></h5>
 	         <% end %></div>
         <% end %>
       

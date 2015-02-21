@@ -7,7 +7,7 @@ class QuestionsController < ApplicationController
   end
 
   def new 
-    @question = current_user.questions.build  #this method (and the questions.build in create) makes it so that whenever a user creates a question, it is automatically added to their profile (even if hit "add question" while viewing another's profile)
+    @question = current_user.questions.build  #this method (and the questions.build in create) makes it so that whenever a user creates a question, it is automatically added to their profile 
     @user = current_user #another method would be to set this to current_user
     #as opposed to questions.build method, if wanted to make it so could only create question from within your profile (eg, if viewing the show page of another user, could not create a question yourself from that page), could use this that raises an error:
       #if @user != current_user  
@@ -31,7 +31,8 @@ class QuestionsController < ApplicationController
     @question = Question.find(params[:id]) 
     user_id = @question.user_id
     @user = User.where({:id => user_id }).first 
-    #@answer = Answer.new
+    @upvote = Upvote.new
+    @answers = @question.answers
   end
 
   def edit  

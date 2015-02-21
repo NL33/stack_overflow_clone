@@ -7,10 +7,10 @@ class AnswersController < ApplicationController
   end
 
   def new 
-    @answer = current_user.answers.build  #this method (and the answers.build in create) makes it so that whenever a user creates a answer, it is automatically added to their profile (even if hit "add answer" while viewing another's profile)
+    @answer = current_user.answers.build  #this method (and the answers.build in create) makes it so that whenever a user creates a answer, it is automatically added to their profile 
     @question = Question.find(params[:question_id])
     question_creator_id = @question.user_id
-    @current_user = current_user
+    @current_user = current_user #probably not necessary
     @question_creator = User.where({:id => question_creator_id}).first
     #another method would be to set this to current_user
     #as opposed to answers.build method, if wanted to make it so could only create answer from within your profile (eg, if viewing the show page of another user, could not create a answer yourself from that page), could use this that raises an error:
@@ -22,12 +22,13 @@ class AnswersController < ApplicationController
 
   def create
     @answer = current_user.answers.build(answer_params)
+       @question = Question.find(params[:question_id])
     @user = current_user
+    @upvote = Upvote.new
      if @answer.save
-        #flash[:notice] = "answer added."
         respond_to do |format|
           format.html { redirect_to root_path}
-          format.js #refers to separate template--here, with create action in name (create.js.erb)
+          format.js #refers to separate answer template--here, with create action in name (views/answers/create.js.erb)
          end
       else
         render 'new' 
