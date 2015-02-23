@@ -98,7 +98,8 @@ $ rails generate migration create_users
 $ rails generate migration create_questions
 $ rails generate migration create_answers
    $ rails generate migration DeleteChosenAnswerFromAnswers chosen_answer:string
-    $ rails generate migration AddChosenAnswerToAnswers chosen_answer:boolean
+   $ rails generate migration AddChosenAnswerToAnswers chosen_answer:boolean
+  $ rails generate migration AddUpvotesCountToAnswers upvotes_count:integer   //add upvotes count in order to sort answers by count
 $ rails generate migration create_upvotes
 
 

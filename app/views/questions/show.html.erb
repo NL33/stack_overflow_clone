@@ -24,7 +24,7 @@
 
 <% if @question.answers %>
 	<div class="show_answers">
-	 <%= render @question.answers.order_by_upvotes %>
+	 <%= render @question.answers %>
 	 <%# Whenever render is passed a collection of objects, it will render a partial with the same name as the class of the objects in the collection. So this is equivalent to
 	    <% @question.answers.each do |answer | %>
 	       <%#= render 'answer' %>

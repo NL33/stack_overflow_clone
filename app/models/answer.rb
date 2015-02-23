@@ -1,49 +1,23 @@
 class Answer < ActiveRecord::Base
 
- default_scope { order('chosen_answer DESC')}
+ default_scope { order('chosen_answer DESC, upvotes_count DESC')} #this sorts the answers displayed by: 1) Whether it is a chosen answer or not (chosen answer listed at top), then 2) upvotes_count (in descending order)
 
+#Note alternative order methods include the following (in this case, would be in the questions show controller, where the answers form rendered): 
+    #@answers = @question.answers.order("upvotes_count DESC")
+    #@answers = @question.answers.order("chosen_answer DESC, upvotes_count DESC")
+    #@answers = @question.answers.sort_by {|x| [x.upvotes_count]}
+    #{ |a,b| a.upvotes_count <=> b.upvotes_count }. This changes array from a to b, sorted by upvotes_count}
+    #@answers = @question.answers.order('upvotes_count')
+    #extended method in the model:
+      #create a hash (dictionary) with answers: upvote.count.  Then loop through and put answers and upvote.count into the hash. sort hash by upvote count. display hash.
 
  belongs_to :user
  belongs_to :question
- has_many :upvotes
+ has_many :upvotes, :counter_cache => true #this means that Rails will auotmatically maintain a count of upvotes an answer gets (along with counter cache in upvote.)
 
  def show_user
  	user = User.where({:id => self.user_id}).first
  	user.name
  end
 
-  def find_other_answers #produces array of question.answers other than self (for use in taking action on these other answers)
- 	answer = self
- 	question = Question.where({:id => self.question_id}).first
- 	array = question.answers
- 	updated_array = array.reject{|element| element == answer}
-    updated_array
-  end
-
-def order_by_upvotes #method to sort answers by upvotes:
-    order_answers = {} #CREATE A (HASH) DICTIONARY WITH THE ANSWERS and UPVOTES: [Answer: Upvote.count, Answer: upvote.count]
-    
-    self.each do |answer| #put answer and count into hash
-        order_answers << answer
-    	order_answers << answer.upvotes.count 
-    end
-    #sort hash by upvote count
-    #display hash
-
-  end
-
 end
-
-
-#From hackernews clone (in link.rb)
-  #def self.order_by_rating_formula
-  #  links = Link.all
-   # links_ordered_by_ratings = {}
-   # links.each do |link|
-    #  links_ordered_by_ratings[link] = link.rating_formula
-    #end
-   # updated_order = links_ordered_by_ratings.keys.sort {|a, b| links_ordered_by_ratings[b] <=> links_ordered_by_ratings[a]}
- # end
-  
-#end
-

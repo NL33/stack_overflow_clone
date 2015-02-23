@@ -32,7 +32,6 @@ class QuestionsController < ApplicationController
     user_id = @question.user_id
     @user = User.where({:id => user_id }).first 
     @upvote = Upvote.new
-    @answers = @question.answers
   end
 
   def edit  
