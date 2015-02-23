@@ -4,6 +4,9 @@ class QuestionsController < ApplicationController
   def index 
     @questions = Question.all
     @user = current_user
+    if params[:query]
+      @searched_questions = Question.basic_search(params[:query])
+    end
   end
 
   def new 

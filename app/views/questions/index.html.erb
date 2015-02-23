@@ -12,6 +12,38 @@
   <% end %>
 </br>
 
+
+<%= form_tag questions_path, method: :get do %>
+  <p>
+    <%= text_field_tag :query, params[:query] %>
+    <%= submit_tag "Search", :value => nil %>
+  </p>
+<% end %>
+
+<% if @searched_questions %>
+  <% @searched_questions.each do |searched_question| %>
+	<table>
+	  <tr>
+		 <td><div class ="center"><%= searched_question.answers.count %></br> answers </div></td>
+		 <td> <%= link_to searched_question.title, question_path(searched_question) %></td>
+	  </tr>
+	</table>
+  <% end %>
+	</br>
+<% end %>
+
+<% if @searched_answers %>
+  <% @searched_answers.each do |searched_answer| %>
+	<table>
+	  <tr>
+		 <td> <%= searched_answer.text %></td>
+	  </tr>
+	</table>
+  <% end %>
+	</br>
+<% end %>
+
+
 <% unless @user %>
    <%= link_to "Sign Up", new_user_path, :class => "btn btn-default" %>
 
@@ -21,5 +53,7 @@
 <% if @user %>
   <%= link_to "Add a Question", new_question_path, :class => "btn btn-default" %>
 <% end %>
+
+
   
 
